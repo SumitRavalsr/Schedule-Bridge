@@ -44,6 +44,8 @@ app.use('/',userRoutes)
 app.use(bookingRoutes)
 
 
+app.use('/videos', express.static(path.join(__dirname, 'views', 'videos')))
+
 
 connectToDB()
 
