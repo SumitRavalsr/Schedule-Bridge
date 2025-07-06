@@ -48,7 +48,7 @@ const fetchAppointments = async(req,res)=>{
 
 const updateAppointment = async (req,res)=>{
 
-    console.log(req.body);
+    // console.log(req.body);
     
     const appointment = await Booking.findById(req.body._id)
 
@@ -63,7 +63,7 @@ const updateAppointment = async (req,res)=>{
     await appointment.save()
 
    
-    console.log(appointment);
+    // console.log(appointment);
     
     res.json({
         "success": true,

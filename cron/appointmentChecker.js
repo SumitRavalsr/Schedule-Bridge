@@ -2,7 +2,7 @@ const cron = require('node-cron')
 const Booking = require('../models/booking')
 
 
-const updateRegular = cron.schedule('* * * * *',async ()=>{
+const updateRegular = cron.schedule('*/5 * * * *',async ()=>{
     console.log("scheduled..");
     
     try{

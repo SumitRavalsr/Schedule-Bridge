@@ -34,7 +34,7 @@ const changePasswordPage = (req, res)=>{
 // this will take token of cookie and then already decoded through middleware and send details to client
 
 const getUserDetails = (req,res)=>{
-    console.log(req.userDetails);
+    // console.log(req.userDetails);
     res.json({
         success: true,
         _id : req.userDetails.userId,
@@ -44,8 +44,8 @@ const getUserDetails = (req,res)=>{
 }
 
 const changePassword = async (req,res)=>{
-    console.log(req.userDetails);
-    console.log(req.body);
+    // console.log(req.userDetails);
+    // console.log(req.body);
     const password = req.body.password
 
     try {
@@ -125,7 +125,7 @@ const isCorrectUser =async (req, res)=>{
                 message: "Invalid credentials!"
             })
         }
-        console.log("matched.."); 
+        // console.log("matched.."); 
 
         const passToken = jwt.sign({
             userId: user._id,
@@ -162,7 +162,7 @@ const isCorrectUser =async (req, res)=>{
 }
 
 const getUserDetailsForProfile = async (req,res)=>{
-    console.log(req.userInfo);
+    // console.log(req.userInfo);
     
     res.json({
         success: true,
@@ -214,8 +214,8 @@ const handleBooking = async (req,res)=>{
     try{
 
     
-    console.log(req.body);
-    console.log(req.userInfo);
+    // console.log(req.body);
+    // console.log(req.userInfo);
 
     const {adminId, firstName, lastName, email, mno, date, time} = req.body
     
@@ -263,7 +263,7 @@ const fetchAppointments = async (req,res)=>{
 
             // const admin = await Admin.findById(adminId).lean();
             const appointments = await Booking.find({customer_id}).lean()
-            console.log(appointments);
+            // console.log(appointments);
             
             if (!appointments.length) {
                 return res.json({ success: false, message: "No appointments found" });
@@ -278,7 +278,7 @@ const fetchAppointments = async (req,res)=>{
 
 const searchBusiness = async (req, res) =>{
     // console.log("bussiness...");
-    console.log(req.query.query);
+    // console.log(req.query.query);
     try {
         const admins = await Admin.find({
             company_name: { $regex: new RegExp(req.query.query, 'i')},
