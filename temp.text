@@ -1,0 +1,45 @@
+Microsoft Windows [Version 10.0.26100.4351]        
+(c) Microsoft Corporation. All rights reserved.    
+
+D:\4th Year\Project\Schedule-Bridge>npm init -y    
+Wrote to D:\4th Year\Project\Schedule-Bridge\package.json:
+
+{
+  "name": "schedule-bridge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
+
+
+
+
+D:\4th Year\Project\Schedule-Bridge>npm i express m
+ongoose dotenv
+
+added 85 packages, and audited 86 packages in 10s  
+
+16 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+D:\4th Year\Project\Schedule-Bridge>npm i nodemon --save-dev
+
+added 27 packages, and audited 113 packages in 3s
+
+20 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+D:\4th Year\Project\Schedule-Bridge>
+
+
+npm run dev
