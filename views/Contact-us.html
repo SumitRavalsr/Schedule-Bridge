@@ -547,7 +547,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="confirmtion">Sending Message Successful</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.href=`/Home`">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="window.location.href=`/user-home`">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -708,14 +708,15 @@ document.addEventListener('DOMContentLoaded', function () {
       const formData = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
-        details: document.getElementById('details').value
+        message: document.getElementById('details').value
       };
 
-      fetch('/contactUs-req', {
+      fetch('/contact', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials:"include",
             body: JSON.stringify(formData)
         })
         .then(response => response.json())
@@ -727,7 +728,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
     document.getElementById('goHome').addEventListener('click',function(){
-      window.location.href='/Home';
+      window.location.href='/user-home';
     });
   </script>
 </body>

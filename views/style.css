@@ -514,7 +514,7 @@
   
   
   /* from second one */
-  .img-set {
+  /* .img-set {
     border-radius: 50%;
     border: 2px solid white;
     transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1), border-radius 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -523,7 +523,25 @@
   .img-set:hover {
     border-radius: 10px;
     transform: scale(1.1);
-  }
+  } */
+
+ .img-set {
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    object-fit: cover;
+    transition: transform 0.4s ease, border-radius 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.img-set:hover {
+    border-radius: 15px; /* Rounded square */
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+
   
   .form-color {
     /* margin-left: 20px; */

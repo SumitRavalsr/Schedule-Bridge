@@ -441,7 +441,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           </a>
           <div class="dropdown-menu profile mt-3" style="left: -150px;">
-            <a href="/Admin-Profile" class="dropdown-item">Profile section</a>
+            <a href="/admin-profile" class="dropdown-item">Profile section</a>
             <button class="dropdown-item" onclick="handleLogout()">Log Out</button>
           </div>
         </li>
@@ -540,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="modal-header">
                   <h5 class="modal-title" id="confirmtion">Sending Message Successful</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="window.location.href=`/Admin_Home`">
+                    onclick="window.location.href=`/admin-home`">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -702,10 +702,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const formData = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
-        details: document.getElementById('details').value
+        message: document.getElementById('details').value
       };
 
-      fetch('/contactUs-req', {
+      fetch('/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -721,7 +721,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
     document.getElementById('goHome').addEventListener('click', function () {
-      window.location.href = '/Admin_Home';
+      window.location.href = '/admin-home';
     });
   </script>
 </body>

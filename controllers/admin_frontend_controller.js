@@ -1,6 +1,7 @@
 const path = require('path');
 const Admin = require('../models/admin');
-const Booking = require('../models/booking')
+const Booking = require('../models/booking');
+const user = require('../models/user');
 
 const serveLoginPage = (req, res)=>{
 
@@ -46,6 +47,60 @@ const fetchAppointments = async(req,res)=>{
     }
 }
 
+const updateDetails = async (req, res) => {
+    try {
+        const adminId = req.userInfo.userId;
+
+        const admin = await Admin.findById(adminId);
+
+        if (!admin) {
+            return res.status(404).json({
+                success: false,
+                message: "Admin not found"
+            });
+        }
+        const em= req.body.email
+        if(admin.email === req.body.email || !Admin.findOne({$or:[{em}]}) && !user.findOne({$or:[{em}]})) {
+            admin.name = req.body.adminname;
+            admin.email = req.body.email;
+            admin.company_name = req.body.companyname;
+            admin.sector = req.body.sector;
+            admin.address = req.body.address;
+            admin.state = req.body.state;
+            admin.country = req.body.country;
+            admin.pin_code = req.body.pincode;
+            admin.mno = req.body.mno;
+            admin.total_work_hours = req.body.total_workhours;
+            admin.start_time = req.body.start_time;
+            admin.end_time = req.body.end_time;
+            admin.total_slots = req.body.totalslots;
+            admin.website = req.body.website;
+            admin.service = req.body.services;
+    
+            await admin.save();
+    
+            res.json({
+                success: true,
+                message: "Admin details updated successfully"
+            });
+
+        }else{
+            res.status(400).json({
+            success: false,
+            message: "Email already exists"
+        });
+
+        }
+
+    } catch (error) {
+        console.error('Error updating admin details:', error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
+};
+
 const updateAppointment = async (req,res)=>{
 
     // console.log(req.body);
@@ -71,4 +126,4 @@ const updateAppointment = async (req,res)=>{
     })
 }
 
-module.exports = {serveLoginPage,fetchAdmin, fetchAppointments, updateAppointment}
+module.exports = {serveLoginPage,fetchAdmin, fetchAppointments, updateAppointment, updateDetails}

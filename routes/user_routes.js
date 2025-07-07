@@ -32,6 +32,7 @@ const Admin = require('../models/admin')
 
 router.get('/user-signup', userController.signupPage);
 router.get('/forgot-password',forgotPassMiddleware, userController.changePasswordPage);
+router.get('/set-password',authMiddleware, userController.setPasswordPage);
 
 router.post('/verifyUser',userController.isCorrectUser);
 router.get('/verify-user',userController.verifyPasswordPage);
@@ -41,8 +42,11 @@ router.get('/get-userid',forgotPassMiddleware,userController.getUserDetails)
 router.get('/user-home',authMiddleware,userMiddleware,userController.homePage);
 
 router.post('/change-password',forgotPassMiddleware,userController.changePassword)
+router.post('/set-password',authMiddleware,userController.setPassword)
 router.post('/logout',authMiddleware,userController.logoutUser)//don't use user because admin can also use it
 router.get('/user/details',authMiddleware,userMiddleware,userController.getUserDetailsForProfile)
+
+router.post('/change-user-profile',authMiddleware,userController.changeUserProfile)
 
 
 // other routes
@@ -96,12 +100,14 @@ router.get('/user/fetchAdmin/:adminId',authMiddleware,userMiddleware,userControl
 router.get('/user/company/:adminId',authMiddleware,userMiddleware,(req,res)=>{
     // console.log("happy");
     
-    console.log(req.userInfo);
+    // console.log(req.userInfo);
     res.sendFile(path.join(__dirname, '../views', 'company_details.html'))
     
 })
 
 router.post('/user/book',authMiddleware, userMiddleware, userController.handleBooking)
+
+router.post('/contact',authMiddleware,userController.contactHandle)
 
 router.get('/user/fetch-appointments',authMiddleware,userMiddleware,userController.fetchAppointments)
 

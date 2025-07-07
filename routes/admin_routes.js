@@ -54,11 +54,20 @@ router.get('/admin/profile',authMiddleware,adminMiddleware,(req,res)=>{
     // })
 })
 
+router.get('/admin/profile-update',authMiddleware,adminMiddleware,(req,res)=>{
+    res.sendFile(path.join(__dirname, '../views','Admin-update.html'))
+    // res.json({
+    //     message: "Welcome to the admin page"
+    // })
+})
+
 router.get('/admin/profile/details',authMiddleware,adminMiddleware,adminController.fetchAdmin)
 
 router.get('/admin/appointments',authMiddleware,adminMiddleware,adminController.fetchAppointments)
 
 router.post('/admin/update-appointment',authMiddleware,adminMiddleware,adminController.updateAppointment)
+
+router.post('/admin/update-details',authMiddleware,adminMiddleware,adminController.updateDetails)
 
 
 module.exports = router

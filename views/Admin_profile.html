@@ -113,7 +113,7 @@
 
 
   <main id="main-id" class="dark-theme">
-    <div class="mycontainer">
+    <!-- <div class="mycontainer">
       <div class="changepassword">
         <div class="app d-flex flex-wrap justify-content-between m-4 mb-0">
           <div class="modal fade text-dark" id="cp-modal">
@@ -260,13 +260,13 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div id="change-bg2" class="flex-column  mycontainer-contact-us m-4 px-2 py-4 text-center">
       <h2>Your Profile</h2>
-      <div class="team row py-4 justify-content-center">
-        <div class="member col-12 col-md-4  py-4">
+      <div class="team row justify-content-center">
+        <div class="member col-12 col-md-4  ">
 
-          <img id="profile-invert5" class="img-set member-photo img-fluid mt-3" height="400px" width="400px"
+          <img id="profile-invert5" class="img-set member-photo img-fluid" height="400px" width="400px"
             src="/Images/peofile.png" alt="Member 1">
 
           <div id="profile-section">
@@ -525,7 +525,7 @@
 
             // Set values inside the profile section
             document.getElementById('profile-section').innerHTML = `
-                <h4><strong>Name:</strong> ${admin.name}</h4>
+                <h4 class="mt-4"><strong>Name:</strong> ${admin.name}</h4>
                 <h4><strong>Company:</strong> ${admin.company_name}</h4>
                 <h4><strong>Sector:</strong> ${admin.sector}</h4>
                 <h4><strong>Address:</strong> ${admin.address}, ${admin.state}, ${admin.country} - ${admin.pin_code}</h4>
@@ -535,21 +535,23 @@
                 <h4><strong>Total Slots:</strong> ${admin.total_slots}</h4>
                 <h4><strong>Website:</strong> ${admin.website}</h4>
                 <h4><strong>Services:</strong> ${admin.service}</h4>
+                <button class="btn btn-success mr-2" onclick="changepassword('${encodeURIComponent(JSON.stringify(admin.email))}')">Change Password</button>
+                <button class="btn btn-success mr-2" onclick="editprofile('${encodeURIComponent(JSON.stringify(admin))}')">Edit Profile</button>
             `;
 
             // Also set details in Change Password modal
-            document.getElementById('adminname').value = admin.name;
+            // document.getElementById('adminname').value = admin.name;
 
-             // Set details in Edit Profile modal (Old Details)
-            document.getElementById('oldadminname').value = admin.name;
-            document.getElementById('oldemail').value = admin.email;
-            document.getElementById('oldsector').value = admin.sector;
-            document.getElementById('oldaddress').value = admin.address;
-            document.getElementById('oldmno').value = admin.mno;
-            document.getElementById('oldtime').value = `${admin.total_work_hours} hrs ( ${admin.start_time} - ${admin.end_time} )`;
-            document.getElementById('oldslots').value = admin.total_slots;
-            document.getElementById('oldweb').value = admin.website;
-            document.getElementById('oldservice').value = admin.service;
+            //  // Set details in Edit Profile modal (Old Details)
+            // document.getElementById('oldadminname').value = admin.name;
+            // document.getElementById('oldemail').value = admin.email;
+            // document.getElementById('oldsector').value = admin.sector;
+            // document.getElementById('oldaddress').value = admin.address;
+            // document.getElementById('oldmno').value = admin.mno;
+            // document.getElementById('oldtime').value = `${admin.total_work_hours} hrs ( ${admin.start_time} - ${admin.end_time} )`;
+            // document.getElementById('oldslots').value = admin.total_slots;
+            // document.getElementById('oldweb').value = admin.website;
+            // document.getElementById('oldservice').value = admin.service;
         } else {
             alert("Failed to fetch profile. Please login again.");
             window.location.href = '/login';
@@ -565,129 +567,131 @@
     }
 
     function changepassword(proJson) {
-      const prof = JSON.parse(decodeURIComponent(proJson));
-      document.getElementById('adminname').value = prof.admin;
-      $('#cp-modal').modal('show');
+      window.location.href = '/set-password'
+      // const prof = JSON.parse(decodeURIComponent(proJson));
+      // document.getElementById('adminname').value = prof.admin;
+      // $('#cp-modal').modal('show');
     }
 
     function editprofile(proJson) {
-      const eprof = JSON.parse(decodeURIComponent(proJson));
-      document.getElementById('oldadminname').value = eprof.admin;
-      document.getElementById('oldemail').value = eprof.admin_email;
-      document.getElementById('oldsector').value = eprof.sector;
-      document.getElementById('oldaddress').value = (eprof.address + eprof.state + eprof.country + eprof.pincode);
-      document.getElementById('oldmno').value = eprof.mno;
-      document.getElementById('oldtime').value = ("Total " + eprof.total_workhours + " from " + eprof.start_time + " AM " + " to " + eprof.end_time + " PM");
-      document.getElementById('oldslots').value = eprof.totalslots;
-      document.getElementById('oldweb').value = eprof.website || 'N/A';
-      document.getElementById('oldservice').value = eprof.service;
-      $('#ep-modal').modal('show');
-      $('#loadabove').click(function () {
-        document.getElementById('eadminname').value = eprof.admin;
-        document.getElementById('eemail').value = eprof.admin_email;
-        document.getElementById('ecompanyname').value = eprof.companyname;
-        document.getElementById('esector').value = eprof.sector;
-        document.getElementById('eaddress').value = eprof.address;
-        document.getElementById('estate').value = eprof.state;
-        document.getElementById('ecountry').value = eprof.country;
-        document.getElementById('epincode').value = eprof.pincode;
-        document.getElementById('emno').value = eprof.mno;
-        document.getElementById('etotal_workhours').value = eprof.total_workhours;
-        document.getElementById('estart_time').value = eprof.start_time;
-        document.getElementById('eend_time').value = eprof.end_time;
-        document.getElementById('ewebsite').value = eprof.website;
-        document.getElementById('eservice').value = eprof.service;
-      });
+      document.location.href = '/admin/profile-update'
+      // const eprof = JSON.parse(decodeURIComponent(proJson));
+      // document.getElementById('oldadminname').value = eprof.admin;
+      // document.getElementById('oldemail').value = eprof.admin_email;
+      // document.getElementById('oldsector').value = eprof.sector;
+      // document.getElementById('oldaddress').value = (eprof.address + eprof.state + eprof.country + eprof.pincode);
+      // document.getElementById('oldmno').value = eprof.mno;
+      // document.getElementById('oldtime').value = ("Total " + eprof.total_workhours + " from " + eprof.start_time + " AM " + " to " + eprof.end_time + " PM");
+      // document.getElementById('oldslots').value = eprof.totalslots;
+      // document.getElementById('oldweb').value = eprof.website || 'N/A';
+      // document.getElementById('oldservice').value = eprof.service;
+      // $('#ep-modal').modal('show');
+      // $('#loadabove').click(function () {
+      //   document.getElementById('eadminname').value = eprof.admin;
+      //   document.getElementById('eemail').value = eprof.admin_email;
+      //   document.getElementById('ecompanyname').value = eprof.companyname;
+      //   document.getElementById('esector').value = eprof.sector;
+      //   document.getElementById('eaddress').value = eprof.address;
+      //   document.getElementById('estate').value = eprof.state;
+      //   document.getElementById('ecountry').value = eprof.country;
+      //   document.getElementById('epincode').value = eprof.pincode;
+      //   document.getElementById('emno').value = eprof.mno;
+      //   document.getElementById('etotal_workhours').value = eprof.total_workhours;
+      //   document.getElementById('estart_time').value = eprof.start_time;
+      //   document.getElementById('eend_time').value = eprof.end_time;
+      //   document.getElementById('ewebsite').value = eprof.website;
+      //   document.getElementById('eservice').value = eprof.service;
+      // });
     }
 
-    document.getElementById('submitbtn').addEventListener('click', function (event) {
-      event.preventDefault();
+    // document.getElementById('submitbtn').addEventListener('click', function (event) {
+    //   event.preventDefault();
 
-      const formData = {
-        admin: document.getElementById('adminname').value,
-        admin_password: document.getElementById('newp').value
-      };
+    //   const formData = {
+    //     admin: document.getElementById('adminname').value,
+    //     admin_password: document.getElementById('newp').value
+    //   };
 
-      fetch('/change-pass-admin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-        .then(response => response.json())
-        .then(data => {
-          $('#cp-confirmation-modal').modal('show');
-        })
-        .catch(error => {
-          console.error('Error changing password:', error);
-        });
-    });
+    //   fetch('/change-pass-admin', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(formData)
+    //   })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       $('#cp-confirmation-modal').modal('show');
+    //     })
+    //     .catch(error => {
+    //       console.error('Error changing password:', error);
+    //     });
+    // });
 
-    function verify() {
-      var un = document.getElementById('newp').value;
-      var ln = document.getElementById('cnewp').value;
+    // function verify() {
+    //   var un = document.getElementById('newp').value;
+    //   var ln = document.getElementById('cnewp').value;
 
-      if (un == "") {
-        document.getElementById('newp').style.borderColor = "red";
-        window.alert('Fill the require fields!');
-      }
-      else if (ln == "") {
-        document.getElementById('cnewp').style.borderColor = "red";
-        window.alert('Fill the require fields!');
-      }
-      else if (un != ln) {
-        document.getElementById('newp').style.borderColor = "red";
-        document.getElementById('cnewp').style.borderColor = "red";
-        window.alert('Confirm Password is Wrong!');
-      }
-      else {
-        document.getElementById('submitbtn').click();
-      }
-    }
-    document.getElementById('goHome').addEventListener('click', function () {
-      window.location.href = '/logout?role=admin';
-    });
-    document.getElementById('goHome2').addEventListener('click', function () {
-      window.location.href = '/logout?role=admin';
-    });
-    document.getElementById('esubmitbtn').addEventListener('click', function (event) {
-      event.preventDefault();
+    //   if (un == "") {
+    //     document.getElementById('newp').style.borderColor = "red";
+    //     window.alert('Fill the require fields!');
+    //   }
+    //   else if (ln == "") {
+    //     document.getElementById('cnewp').style.borderColor = "red";
+    //     window.alert('Fill the require fields!');
+    //   }
+    //   else if (un != ln) {
+    //     document.getElementById('newp').style.borderColor = "red";
+    //     document.getElementById('cnewp').style.borderColor = "red";
+    //     window.alert('Confirm Password is Wrong!');
+    //   }
+    //   else {
+    //     document.getElementById('submitbtn').click();
+    //   }
+    // }
+    // document.getElementById('goHome').addEventListener('click', function () {
+    //   window.location.href = '/logout?role=admin';
+    // });
+    // document.getElementById('goHome2').addEventListener('click', function () {
+    //   window.location.href = '/logout?role=admin';
+    // });
+    // document.getElementById('esubmitbtn').addEventListener('click', function (event) {
+    //   event.preventDefault();
 
-      const formData = {
-        oadmin: document.getElementById('oldadminname').value,
-        admin: document.getElementById('eadminname').value,
-        admin_email: document.getElementById('eemail').value,
-        companyname: document.getElementById('ecompanyname').value,
-        sector: document.getElementById('esector').value,
-        address: document.getElementById('eaddress').value,
-        state: document.getElementById('estate').value,
-        country: document.getElementById('ecountry').value,
-        pincode: document.getElementById('epincode').value,
-        mno: document.getElementById('emno').value,
-        total_workhours: document.getElementById('etotal_workhours').value,
-        start_time: document.getElementById('estart_time').value,
-        end_time: document.getElementById('eend_time').value,
-        totalslots: document.getElementById('etotalslots').value,
-        website: document.getElementById('ewebsite').value,
-        service: document.getElementById('eservice').value,
-      };
+    //   const formData = {
+    //     oadmin: document.getElementById('oldadminname').value,
+    //     admin: document.getElementById('eadminname').value,
+    //     admin_email: document.getElementById('eemail').value,
+    //     companyname: document.getElementById('ecompanyname').value,
+    //     sector: document.getElementById('esector').value,
+    //     address: document.getElementById('eaddress').value,
+    //     state: document.getElementById('estate').value,
+    //     country: document.getElementById('ecountry').value,
+    //     pincode: document.getElementById('epincode').value,
+    //     mno: document.getElementById('emno').value,
+    //     total_workhours: document.getElementById('etotal_workhours').value,
+    //     start_time: document.getElementById('estart_time').value,
+    //     end_time: document.getElementById('eend_time').value,
+    //     totalslots: document.getElementById('etotalslots').value,
+    //     website: document.getElementById('ewebsite').value,
+    //     service: document.getElementById('eservice').value,
+    //   };
 
-      fetch('/change-admin-prof', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-        .then(response => response.json())
-        .then(data => {
-          $('#ep-confirmation-modal').modal('show');
-        })
-        .catch(error => {
-          console.error('Error changing profile:', error);
-        });
-    });
+    //   fetch('/change-admin-prof', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(formData)
+    //   })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       $('#ep-confirmation-modal').modal('show');
+    //     })
+    //     .catch(error => {
+    //       console.error('Error changing profile:', error);
+    //     });
+    // });
   </script>
 </body>
 

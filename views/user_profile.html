@@ -239,12 +239,12 @@ document.documentElement.setAttribute("data-theme", localStorage.getItem('light-
                     src="/Images/peofile.png" alt="Member 1">
 
                 <div id="profile-section">
-                  <h2><strong>Name:</strong> <span id="name_user"></span></h2>
+                  <!-- <h2><strong>Name:</strong> <span id="name_user"></span></h2>
                   <h2><strong>Email:</strong> <span id="email_user"></span></h2>
                   <h2><strong>Role:</strong> <span id="role_user"></span></h2>
 
-                  <button class="btn btn-success mr-2" onclick="changepassword('${encodeURIComponent(JSON.stringify(pro))}')">Change Password</button>
-                  <button class="btn btn-success mr-2" onclick="editprofile('${encodeURIComponent(JSON.stringify(pro))}')">Edit Profile</button>
+                  <button class="btn btn-success mr-2" onclick="changepassword()">Change Password</button>
+                  <button class="btn btn-success mr-2" onclick="editprofile('${encodeURIComponent(JSON.stringify(pro))}')">Edit Profile</button> -->
                 
 
                 </div>
@@ -500,6 +500,9 @@ document.documentElement.setAttribute("data-theme", localStorage.getItem('light-
         document.addEventListener('DOMContentLoaded', loadProfile);
 
         function loadProfile() {
+            const userProfile = document.getElementById('profile-section');
+            userProfile.innerHTML = '';
+
             fetch('/user/details',{
               method: 'GET',
               credentials:"include"
@@ -507,9 +510,25 @@ document.documentElement.setAttribute("data-theme", localStorage.getItem('light-
             .then(res => res.json())
             .then(data=>{
               if(data.success){
-                document.getElementById('name_user').innerText = data.user.name;
-                document.getElementById('email_user').innerText = data.user.email;
-                document.getElementById('role_user').innerText = data.user.role;
+
+                const profileDiv = document.createElement('div');
+                profileDiv.innerHTML = `
+                
+                    <h2><strong>Name</strong> : ${data.user.name}</h2>
+                    <h2><strong>Email</strong> : ${data.user.email}</h2>
+                    <button class="btn btn-success mr-2" onclick="changepassword('${encodeURIComponent(JSON.stringify(data.user.email))}')">Change Password</button>
+                    <button class="btn btn-success mr-2" onclick="editprofile('${encodeURIComponent(JSON.stringify(data.user))}')">Edit Profile</button>
+                `;
+                userProfile.appendChild(profileDiv);
+
+
+
+
+                // console.log(data.user);
+                
+                // document.getElementById('name_user').innerText = data.user.name;
+                // document.getElementById('email_user').innerText = data.user.email;
+                // document.getElementById('role_user').innerText = data.user.role;
               } else {
                 alert("Failed to fetch profile. Please login.");
                 window.location.href = '/login';
@@ -523,56 +542,63 @@ document.documentElement.setAttribute("data-theme", localStorage.getItem('light-
                 
         }
 
-        function displayProfile(profile) {
-            const userProfile = document.getElementById('profile-section');
-            userProfile.innerHTML = '';
+        // function displayProfile(profile) {
+        //     const userProfile = document.getElementById('profile-section');
+        //     userProfile.innerHTML = '';
 
-            profile.forEach(pro => {
-                const profileDiv = document.createElement('div');
-                profileDiv.innerHTML = `
-                    <h2>User Name : ${pro.username}</h2>
-                    <h2>User Email : ${pro.email}</h2>
-                    <button class="btn btn-success mr-2" onclick="changepassword('${encodeURIComponent(JSON.stringify(pro))}')">Change Password</button>
-                    <button class="btn btn-success mr-2" onclick="editprofile('${encodeURIComponent(JSON.stringify(pro))}')">Edit Profile</button>
-                `;
-                userProfile.appendChild(profileDiv);
-            });
-        }
+        //     profile.forEach(pro => {
+        //         // console.log("I am pro",pro);
+                
+        //         const profileDiv = document.createElement('div');
+        //         profileDiv.innerHTML = `
+        //             <h2>User Name : ${pro.username}</h2>
+        //             <h2>User Email : ${pro.email}</h2>
+        //             <button class="btn btn-success mr-2" onclick="changepassword('${encodeURIComponent(JSON.stringify(pro))}')">Change Password</button>
+        //             <button class="btn btn-success mr-2" onclick="editprofile('${encodeURIComponent(JSON.stringify(pro))}')">Edit Profile</button>
+        //         `;
+        //         userProfile.appendChild(profileDiv);
+        //     });
+        // }
 
-        function changepassword(proJson) {
-            const prof = JSON.parse(decodeURIComponent(proJson));
-            document.getElementById('uname').value = prof.username;
-            $('#cp-modal').modal('show');
+        function changepassword(email) {
+          window.location.href = '/set-password'
+          // const prof = JSON.parse(decodeURIComponent(email));
+          // console.log(email);
+          //   document.getElementById('uname').value = prof;
+          //   $('#cp-modal').modal('show');
         }
 
         function editprofile(proJson) {
             const eprof = JSON.parse(decodeURIComponent(proJson));
-            document.getElementById('olduname').value = eprof.username;
+            document.getElementById('olduname').value = eprof.name;
             document.getElementById('oldemail').value = eprof.email;
             $('#ep-modal').modal('show');
         }
 
         document.getElementById('submitbtn').addEventListener('click', function (event) {
             event.preventDefault();
+            
+            // const formData = {
+              const password = document.getElementById('newp').value
+                // password: document.getElementById('newp').value
+            // };
 
-            const formData = {
-                username: document.getElementById('uname').value,
-                password: document.getElementById('newp').value
-            };
-
-            fetch('/change-pass', {
+            fetch('/change-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(formData)
+                credentials: 'include',
+                body: JSON.stringify({
+                  password
+                })
             })
                 .then(response => response.json())
                 .then(data => {
                     $('#cp-confirmation-modal').modal('show');
                 })
                 .catch(error => {
-                    console.error('Error changin password:', error);
+                    console.error('Error changing password:', error);
                 });
         });
 
@@ -608,20 +634,28 @@ document.documentElement.setAttribute("data-theme", localStorage.getItem('light-
 
             const formData = {
                 ousername: document.getElementById('olduname').value,
-                username: document.getElementById('euname').value,
+                name: document.getElementById('euname').value,
                 email: document.getElementById('eemail').value
             };
 
-            fetch('/change-prof', {
+            fetch('/change-user-profile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials:"include",
                 body: JSON.stringify(formData)
             })
                 .then(response => response.json())
                 .then(data => {
-                    $('#ep-confirmation-modal').modal('show');
+                  if(data.success){
+                    // $('#ep-confirmation-modal').modal('show');
+                    alert('Profile updated')
+                    window.location.href = '/';
+
+                  }else{
+                    alert(data.message || 'Failed to update profile')
+                  }
                 })
                 .catch(error => {
                     console.error('Error changing profile:', error);
