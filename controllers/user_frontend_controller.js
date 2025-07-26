@@ -490,7 +490,7 @@ const searchBusiness = async (req, res) =>{
     // console.log(req.query.query);
     try {
         const admins = await Admin.find({
-            company_name: { $regex: new RegExp(req.query.query, 'i')},
+            company_name: { $regex: new RegExp(req.query.query, 'i')},// i for case insensitive 
         })
         res.json({
             success: true, admins
