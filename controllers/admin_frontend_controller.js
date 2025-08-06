@@ -61,19 +61,19 @@ const updateDetails = async (req, res) => {
         }
         const em= req.body.email
         if(admin.email === req.body.email || !Admin.findOne({$or:[{em}]}) && !user.findOne({$or:[{em}]})) {
-            admin.name = req.body.adminname;
+            admin.name = req.body.name;
             admin.email = req.body.email;
-            admin.company_name = req.body.companyname;
+            admin.company_name = req.body.company_name;
             admin.sector = req.body.sector;
             admin.address = req.body.address;
             admin.state = req.body.state;
             admin.country = req.body.country;
-            admin.pin_code = req.body.pincode;
+            admin.pin_code = req.body.pin_code;
             admin.mno = req.body.mno;
-            admin.total_work_hours = req.body.total_workhours;
+            admin.total_work_hours = req.body.total_work_hours;
             admin.start_time = req.body.start_time;
             admin.end_time = req.body.end_time;
-            admin.total_slots = req.body.totalslots;
+            admin.total_slots = req.body.total_slots;
             admin.website = req.body.website;
             admin.service = req.body.services;
     

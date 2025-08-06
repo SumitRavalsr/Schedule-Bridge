@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,202 +14,279 @@
       background-color: #f8f9fa;
       margin-bottom: 20px;
     }
+
     h4 {
       margin-bottom: 15px;
     }
   </style>
 </head>
+
 <body>
 
-<div class="container mt-4">
-  <h2 class="text-center mb-4">Edit Profile</h2>
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">Edit Profile</h2>
 
-  <div class="row">
-    
-    <!-- Old Details Section -->
-    <div class="col-md-6 form-section">
-      <h4>Old Details</h4>
-      <label>Name:</label>
-      <input type="text" class="form-control mb-2" id="oldadminname" readonly>
-      
-      <label>Email:</label>
-      <input type="text" class="form-control mb-2" id="oldemail" readonly>
-      
-      <label>Sector:</label>
-      <input type="text" class="form-control mb-2" id="oldsector" readonly>
-      
-      <label>Address:</label>
-      <input type="text" class="form-control mb-2" id="oldaddress" readonly>
-      
-      <label>Mobile No.:</label>
-      <input type="text" class="form-control mb-2" id="oldmno" readonly>
-      
-      <label>Total Working Hours and Business Hours:</label>
-      <input type="text" class="form-control mb-2" id="oldtime" readonly>
-      
-      <label>Total Slots:</label>
-      <input type="text" class="form-control mb-2" id="oldslots" readonly>
-      
-      <label>Website:</label>
-      <input type="text" class="form-control mb-2" id="oldweb" readonly>
-      
-      <label>Services:</label>
-      <input type="text" class="form-control mb-2" id="oldservice" readonly>
-    </div>
+    <div class="row">
 
-    <!-- New Details Section -->
-    <div class="col-md-6 form-section">
-      <h4>New Details</h4>
-      <form id="epForm">
-        
+      <!-- Old Details Section -->
+      <div class="col-md-6 form-section">
+        <h4>Old Details</h4>
         <label>Name:</label>
-        <input type="text" class="form-control mb-2" id="eadminname" required>
-        
-        <label>Email:</label>
-        <input type="text" class="form-control mb-2" id="eemail" required>
-        
+        <input type="text" class="form-control mb-2" id="oldadminname" readonly>
+
         <label>Company Name:</label>
-        <input type="text" class="form-control mb-2" id="ecompanyname" required>
-        
+        <input type="text" class="form-control mb-2" id="oldcompanynname" readonly>
+        <label>Email:</label>
+        <input type="text" class="form-control mb-2" id="oldemail" readonly>
+
         <label>Sector:</label>
-        <input type="text" class="form-control mb-2" id="esector" required>
-        
+        <input type="text" class="form-control mb-2" id="oldsector" readonly>
+
         <label>Address:</label>
-        <input type="text" class="form-control mb-2" id="eaddress" required>
-        
+        <input type="text" class="form-control mb-2" id="oldaddress" readonly>
+
         <label>State:</label>
-        <input type="text" class="form-control mb-2" id="estate" required>
-        
+        <input type="text" class="form-control mb-2" id="oldstate" readonly>
         <label>Country:</label>
-        <input type="text" class="form-control mb-2" id="ecountry" required>
-        
-        <label>Pincode:</label>
-        <input type="text" class="form-control mb-2" id="epincode" required>
-        
+        <input type="text" class="form-control mb-2" id="oldcountry" readonly>
+        <label>Pin Code:</label>
+        <input type="text" class="form-control mb-2" id="oldpincode" readonly>
+
+
+
         <label>Mobile No.:</label>
-        <input type="text" class="form-control mb-2" id="emno" required pattern="\d{10}">
-        
-        <label>Total Working Hours:</label>
-        <input type="number" class="form-control mb-2" id="etotal_workhours" min="1" max="24" required>
-        
-        <label>Business Start Hours:</label>
+        <input type="text" class="form-control mb-2" id="oldmno" readonly>
+
+        <label>Total Slots:</label>
+        <input type="text" class="form-control mb-2" id="oldslots" readonly>
+
+        <!-- <label>Total Working Hours and Business Hours:</label>
+        <input type="text" class="form-control mb-2" id="oldtime" readonly> -->
+
+        <label for="start_time" class="form-label">Start Time</label>
+        <input style="background-color: none;" type="time" class="form-control fc" id="start_time" name="start_time"
+          readonly>
+
+        <label for="end_time" class="form-label">End Time</label>
+        <input style="background-color: none;" type="time" class="form-control fc" id="end_time" name="end_time"
+          readonly>
+
+        <label for="recess_start_time" class="form-label">Recess Start Time</label>
+        <input style="background-color: none;" type="time" class="form-control fc" id="recess_start_time"
+          name="recess_start_time" readonly>
+
+        <label for="recess_end_time" class="form-label">Recess End Time</label>
+        <input style="background-color: none;" type="time" class="form-control fc" id="recess_end_time"
+          name="recess_end_time" readonly>
+
+
+
+        <label>Website:</label>
+        <input type="text" class="form-control mb-2" id="oldweb" readonly>
+
+        <label>Services:</label>
+        <input type="text" class="form-control mb-2" id="oldservice" readonly>
+      </div>
+
+      <!-- New Details Section -->
+      <div class="col-md-6 form-section">
+        <h4>New Details</h4>
+        <form id="epForm">
+
+          <label>Name:</label>
+          <input type="text" class="form-control mb-2" id="eadminname" required>
+
+          <label>Company Name:</label>
+          <input type="text" class="form-control mb-2" id="ecompanyname" required>
+
+          <label>Email:</label>
+          <input type="text" class="form-control mb-2" id="eemail" required>
+
+          <label>Sector:</label>
+          <input type="text" class="form-control mb-2" id="esector" required>
+
+          <label>Address:</label>
+          <input type="text" class="form-control mb-2" id="eaddress" required>
+
+          <label>State:</label>
+          <input type="text" class="form-control mb-2" id="estate" required>
+
+          <label>Country:</label>
+          <input type="text" class="form-control mb-2" id="ecountry" required>
+
+          <label>Pincode:</label>
+          <input type="text" class="form-control mb-2" id="epincode" required>
+
+          <label>Mobile No.:</label>
+          <input type="text" class="form-control mb-2" id="emno" required pattern="\d{10}">
+
+          <!-- <label>Total Working Hours:</label>
+        <input type="number" class="form-control mb-2" id="etotal_workhours" min="1" max="24" required> -->
+
+          <label>Total Slots:</label>
+          <input type="number" class="form-control mb-2" id="etotalslots" required>
+
+          <!-- <label>Start Time:</label>
         <input type="text" class="form-control mb-2" id="estart_time" placeholder="HH:MM" required>
         
-        <label>Business End Hours:</label>
-        <input type="text" class="form-control mb-2" id="eend_time" placeholder="HH:MM" required>
-        
-        <label>Total Slots Per Day:</label>
-        <input type="number" class="form-control mb-2" id="etotalslots" required>
-        
-        <label>Website:</label>
-        <input type="text" class="form-control mb-2" id="ewebsite">
-        
-        <label>Services:</label>
-        <input type="text" class="form-control mb-3" id="eservice" required>
+        <label>End Time:</label>
+        <input type="text" class="form-control mb-2" id="eend_time" placeholder="HH:MM" required> -->
 
-        <button type="submit" class="btn btn-primary w-100">Submit</button>
-      </form>
+          <label for="start_time" class="form-label">Start Time</label>
+          <input style="background-color: none;" type="time" class="form-control fc" id="estart_time" name="start_time"
+            required>
+          <label for="end_time" class="form-label">End Time</label>
+          <input style="background-color: none;" type="time" class="form-control fc" id="eend_time" name="end_time"
+            required>
+          <label for="recess_start_time" class="form-label">Recess Start Time</label>
+          <input style="background-color: none;" type="time" class="form-control fc" id="erecess_start_time"
+            name="recess_start_time" required>
+          <label for="recess_end_time" class="form-label">Recess End Time</label>
+          <input style="background-color: none;" type="time" class="form-control fc" id="erecess_end_time"
+            name="recess_end_time" required>
+
+          <label>Website:</label>
+          <input type="text" class="form-control mb-2" id="ewebsite">
+
+          <label>Services:</label>
+          <input type="text" class="form-control mb-3" id="eservice" required>
+
+          <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+      </div>
+
     </div>
-
   </div>
-</div>
 
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
 
-    fetch('/admin/profile/details',{
+        fetch('/admin/profile/details', {
           method: 'GET',
           credentials: 'include'
-       })
-       .then(response=>response.json())
-       .then(data=>{
-          if (data.success) {
-            const admin = data.admin;
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              const admin = data.admin;
 
-            // Set details in Edit Profile modal (Old Details)
-            document.getElementById('oldadminname').value = admin.name;
-            document.getElementById('oldemail').value = admin.email;
-            document.getElementById('oldsector').value = admin.sector;
-            document.getElementById('oldaddress').value = admin.address;
-            document.getElementById('oldmno').value = admin.mno;
-            document.getElementById('oldtime').value = `${admin.total_work_hours} hrs ( ${admin.start_time} - ${admin.end_time} )`;
-            document.getElementById('oldslots').value = admin.total_slots;
-            document.getElementById('oldweb').value = admin.website;
-            document.getElementById('oldservice').value = admin.service;
+              // Set details in Edit Profile modal (Old Details)
+              document.getElementById('oldadminname').value = admin.name;
+              document.getElementById('oldemail').value = admin.email;
+              document.getElementById('oldcompanynname').value = admin.company_name;
+              document.getElementById('oldsector').value = admin.sector;
+              document.getElementById('oldaddress').value = admin.address;
+              document.getElementById('oldmno').value = admin.mno;
+              document.getElementById('oldstate').value = admin.state;
+              document.getElementById('oldcountry').value = admin.country;
+              document.getElementById('oldpincode').value = admin.pin_code;
+              // document.getElementById('oldtime').value = `${admin.total_work_hours} hrs ( ${admin.start_time} - ${admin.end_time} )`;
+              document.getElementById('start_time').value = admin.start_time;
+              document.getElementById('end_time').value = admin.end_time;
+              document.getElementById('recess_start_time').value = admin.recess_start_time;
+              document.getElementById('recess_end_time').value = admin.recess_end_time
+              document.getElementById('oldslots').value = admin.total_slots;
+              document.getElementById('oldweb').value = admin.website;
+              document.getElementById('oldservice').value = admin.service;
 
-          }else{
-            alert("Failed to fetch profile. Please login again.");
-            window.location.href = '/login';
-          }
-          
-        
-       })
-       .catch(err => {
-        console.error("Error fetching profile:", err);
-        alert("Something went wrong. Please try again later.");
+
+              // Set editable fields (New/Edit Details)
+              document.getElementById('eadminname').value = admin.name;
+              document.getElementById('eemail').value = admin.email;
+              document.getElementById('ecompanyname').value = admin.company_name;
+              document.getElementById('esector').value = admin.sector;
+              document.getElementById('eaddress').value = admin.address;
+              document.getElementById('emno').value = admin.mno;
+              document.getElementById('estate').value = admin.state;
+              document.getElementById('ecountry').value = admin.country;
+              document.getElementById('epincode').value = admin.pin_code;
+              // document.getElementById('etotal_work_hours').value = admin.total_work_hours;
+              document.getElementById('estart_time').value = admin.start_time;
+              document.getElementById('eend_time').value = admin.end_time;
+              document.getElementById('erecess_start_time').value = admin.recess_start_time;
+              document.getElementById('erecess_end_time').value = admin.recess_end_time;
+              document.getElementById('etotalslots').value = admin.total_slots;
+              document.getElementById('ewebsite').value = admin.website;
+              document.getElementById('eservice').value = admin.service;
+
+            } else {
+              alert("Failed to fetch profile. Please login again.");
+              window.location.href = '/login';
+            }
+
+
+          })
+          .catch(err => {
+            console.error("Error fetching profile:", err);
+            alert("Something went wrong. Please try again later.");
+          });
+
+        // const response = await fetch('/admin/profile/details');  // Replace with your backend GET API
+        // const data = await response.json();
+
+        // if (data.success) {
+
+        // } else {
+        //   alert('Failed to load old details.');
+        // }
+
+      } catch (error) {
+        console.error(error);
+        alert('Error loading old details.');
+      }
     });
 
-    // const response = await fetch('/admin/profile/details');  // Replace with your backend GET API
-    // const data = await response.json();
+    document.getElementById('epForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-    // if (data.success) {
-      
-    // } else {
-    //   alert('Failed to load old details.');
-    // }
+      const payload = {
+        name: document.getElementById('eadminname').value,
+        email: document.getElementById('eemail').value,
+        company_name: document.getElementById('ecompanyname').value,
+        sector: document.getElementById('esector').value,
+        address: document.getElementById('eaddress').value,
+        state: document.getElementById('estate').value,
+        country: document.getElementById('ecountry').value,
+        pin_code: document.getElementById('epincode').value,
+        mno: document.getElementById('emno').value,
+        // total_work_hours: document.getElementById('etotal_workhours').value,
+        start_time: document.getElementById('estart_time').value,
+        end_time: document.getElementById('eend_time').value,
+        total_slots: document.getElementById('etotalslots').value,
+        recess_start_time: document.getElementById('erecess_start_time').value,
+        recess_end_time: document.getElementById('erecess_end_time').value,
+        recess_start_time: document.getElementById('erecess_start_time').value,
+        recess_end_time: document.getElementById('erecess_end_time').value,
+        website: document.getElementById('ewebsite').value,
+        services: document.getElementById('eservice').value
+      };
 
-  } catch (error) {
-    console.error(error);
-    alert('Error loading old details.');
-  }
-});
+      try {
+        const response = await fetch('/admin/update-details', {   // Replace with your backend POST API
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify(payload)
+        });
 
-document.getElementById('epForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const payload = {
-    adminname: document.getElementById('eadminname').value,
-    email: document.getElementById('eemail').value,
-    companyname: document.getElementById('ecompanyname').value,
-    sector: document.getElementById('esector').value,
-    address: document.getElementById('eaddress').value,
-    state: document.getElementById('estate').value,
-    country: document.getElementById('ecountry').value,
-    pincode: document.getElementById('epincode').value,
-    mno: document.getElementById('emno').value,
-    total_workhours: document.getElementById('etotal_workhours').value,
-    start_time: document.getElementById('estart_time').value,
-    end_time: document.getElementById('eend_time').value,
-    totalslots: document.getElementById('etotalslots').value,
-    website: document.getElementById('ewebsite').value,
-    services: document.getElementById('eservice').value
-  };
-
-  try {
-    const response = await fetch('/admin/update-details', {   // Replace with your backend POST API
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify(payload)
+        const result = await response.json();
+        if (result.success) {
+          alert('Details updated successfully!');
+          document.location.href = '/admin/profile'
+          document.getElementById('epForm').reset();
+        } else {
+          alert(result.message);
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Error submitting form.');
+      }
     });
-
-    const result = await response.json();
-    if (result.success) {
-      alert('Details updated successfully!');
-      document.location.href = '/admin/profile'
-      document.getElementById('epForm').reset();
-    } else {
-      alert(result.message);
-    }
-  } catch (error) {
-    console.error(error);
-    alert('Error submitting form.');
-  }
-});
-</script>
+  </script>
 
 </body>
+
 </html>

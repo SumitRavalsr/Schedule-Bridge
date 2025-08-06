@@ -31,6 +31,7 @@
             text-align: center;
             margin-bottom: 20px;
         }
+
     </style>
 </head>
 <body>
@@ -48,7 +49,7 @@
                 </div>
             </div>
         </div>
-
+ 
         <!-- Appointment Form Card -->
         <div class="col-lg-6 mb-4" id="appointmentSection" style="display: none;">
             <div class="card shadow h-100">
@@ -76,15 +77,16 @@
                             <input type="text" id="mobile" class="form-control" required>
                         </div>
 
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Date</label>
-                                <input type="date" id="date" class="form-control" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Time</label>
-                                <input type="time" id="time" class="form-control" required>
-                            </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="date" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select Time Slot</label>
+                            <select id="timeSlot" class="form-control" required>
+                                <option value="">-- Select Time Slot --</option>
+                            </select>
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-block">Book Appointment</button>
@@ -107,6 +109,10 @@
 
 <script>
 
+let recess_start_time;
+let recess_end_time;
+let adminData = {};
+
 document.addEventListener('DOMContentLoaded', () => {
     const urlParts = window.location.pathname.split('/');
     const adminId = urlParts[urlParts.length - 1];
@@ -124,7 +130,10 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => {
         if (data.success) {
             const admin = data.admin;
-            const company_name = data.company_name
+            adminData = admin;
+            recess_start_time = admin.recess_start_time;
+            recess_end_time = admin.recess_end_time;
+            
             document.getElementById('detailsContent').innerHTML = `
                 <p><strong>Company Name:</strong> ${admin.company_name}</p>
                 <p><strong>Admin Name:</strong> ${admin.name}</p>
@@ -138,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p><strong>Total Slots:</strong> ${admin.total_slots}</p>
             `;
             
+            generateTimeSlots();
             document.getElementById('appointmentSection').style.display = 'block';
         } else {
             document.getElementById('detailsContent').innerText = "Company not found.";
@@ -154,19 +164,118 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+function generateTimeSlots() {
+    // console.log(adminData);
+    
+    const dropdown = document.getElementById('timeSlot');
+    const startTime = adminData.start_time;
+    const endTime = adminData.end_time;
+    const totalSlots = parseInt(adminData.total_slots);
+    
+    if (!startTime || !endTime || !totalSlots) {
+        dropdown.innerHTML = '<option value="">Unable to generate time slots</option>';
+        return;
+    }
+    
+    const slots = calculateTimeSlots(startTime, endTime, totalSlots);
+    
+    
+    // Clear existing options except the first one
+    dropdown.innerHTML = '<option value="">-- Select Time Slot --</option>';
+    
+    slots.forEach(slot => {
+        if (!slot.isRecess) {
+            const option = document.createElement('option');
+            option.value = slot.startTime;
+            option.textContent = `${slot.startTime} to ${slot.endTime}`;
+            dropdown.appendChild(option);
+          //  console.log(`Slot: ${slot.startTime} to ${slot.endTime}`);
+            
+        }
+    });
+}
+
+function calculateTimeSlots(startTime, endTime, totalSlots) {
+    
+    // console.log(startTime, endTime, totalSlots);
+    // console.log(recess_start_time, recess_end_time);
+    const slots = [];
+    const startMinutes = timeToMinutes(startTime);
+    const endMinutes = timeToMinutes(endTime);
+    const recessStart = recess_start_time ? timeToMinutes(recess_start_time) : null;
+    const recessEnd = recess_end_time ? timeToMinutes(recess_end_time) : null;
+    
+    // Calculate total working minutes excluding recess
+    let totalWorkingMinutes = endMinutes - startMinutes;
+    if (recessStart !== null && recessEnd !== null) {
+        totalWorkingMinutes -= (recessEnd - recessStart);
+    }
+    
+    // Calculate slot duration in minutes
+    const slotDuration = Math.floor(totalWorkingMinutes / totalSlots);
+    
+    let currentTime = startMinutes;
+    let slotsCreated = 0;
+    
+    while (slotsCreated < totalSlots && currentTime < endMinutes) {
+        const slotEndTime = currentTime + slotDuration;
+        
+        // Check if this slot overlaps with recess time
+        let isRecess = false;
+        if (recessStart !== null && recessEnd !== null) {
+            isRecess = (currentTime < recessEnd && slotEndTime > recessStart);
+        }
+        
+        if (!isRecess) {
+            slots.push({
+                startTime: minutesToTime(currentTime),
+                endTime: minutesToTime(slotEndTime),
+                isRecess: false
+            });
+            slotsCreated++;
+        }
+        
+        // Skip recess time
+        if (recessStart !== null && recessEnd !== null && currentTime < recessStart && currentTime + slotDuration > recessStart) {
+            currentTime = recessEnd;
+        } else {
+            currentTime += slotDuration;
+        }
+    }
+
+    console.log("slots -> ",slots);
+    
+    
+    return slots;
+}
+
+function timeToMinutes(timeStr) {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return hours * 60 + minutes;
+}
+
+function minutesToTime(minutes) {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+}
+
+
+
 function bookAppointment(adminId) {
     const firstName = document.getElementById('firstName').value.trim();
     const lastName = document.getElementById('lastName').value.trim();
     const email = document.getElementById('email').value.trim();
     const mno = document.getElementById('mobile').value.trim();
     const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
+    const time = document.getElementById('timeSlot').value;
 
     if (!firstName || !lastName || !email || !mno || !date || !time) {
-        document.getElementById('appointmentMessage').innerHTML = `<div class="alert alert-danger">Please fill all fields.</div>`;
+        document.getElementById('appointmentMessage').innerHTML = `<div class="alert alert-danger">Please fill all fields and select a time slot.</div>`;
         return;
     }
-    // console.log(company_name);
+
+    console.log("trying");
     
 
     fetch('/user/book', {
@@ -174,7 +283,6 @@ function bookAppointment(adminId) {
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            
             adminId,
             firstName,
             lastName,
@@ -189,6 +297,11 @@ function bookAppointment(adminId) {
         if (data.success) {
             document.getElementById('appointmentMessage').innerHTML = `<div class="alert alert-success">Appointment booked successfully!</div>`;
             document.getElementById('appointmentForm').reset();
+            // document.getElementById('selectedTime').value = '';
+            // Reset time slot selections
+            document.querySelectorAll('.time-slot-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
         } else {
             document.getElementById('appointmentMessage').innerHTML = `<div class="alert alert-danger">${data.message || 'Failed to book appointment.'}</div>`;
         }

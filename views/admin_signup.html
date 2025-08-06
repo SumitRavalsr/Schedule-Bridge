@@ -85,8 +85,9 @@
         #country,
         #pincode,
         #mno,
-        #total_workhours,
         #start_time,
+        #recess_start_time,
+        #recess_end_time,
         #end_time,
         #totalslots,
         #website,
@@ -107,8 +108,9 @@
         #country:hover,
         #pincode:hover,
         #mno:hover,
-        #total_workhours:hover,
         #start_time:hover,
+        #recess_start_time:hover,
+        #recess_end_time:hover,
         #end_time:hover,
         #totalslots:hover,
         #website:hover,
@@ -555,7 +557,7 @@
                         </div>
                         <div class="col-sm-6 col-12">
                             <div class="mb-3">
-                                <label for="pincode" class="form-label">Pincode</label>
+                                <label for="pincode" class="form-label">Pin code</label>
                                 <input type="text" class="form-control fc" id="pincode" placeholder="Pincode" name="pincode"
                                     required>
                             </div>
@@ -565,21 +567,38 @@
                                 <input type="text" class="form-control fc" id="mno" placeholder="Mobile Number" name="mno"
                                     required inputmode="numeric" pattern="\d{10}">
                             </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="total_workhours" class="form-label">Total Working Hours</label>
                                 <input type="number" class="form-control fc" id="total_workhours"
                                     placeholder="Total Working Hours" name="total_workhours" required>
-                            </div>
-                            <div class="mb-3">
+                            </div> -->
+                            <!-- <div class="mb-3">
                                 <label for="start_time" class="form-label">Starting Time</label>
                                 <input type="text" class="form-control fc" id="start_time" placeholder="Starting Time"
                                     name="start_time" required>
+                            </div> -->
+                            <div class="mb-3">
+                                <label for="start_time" class="form-label">Start Time</label>
+                                <input style="background-color: none;" type="time" class="form-control fc" id="start_time" name="start_time" required>
                             </div>
                             <div class="mb-3">
+                                <label for="end_time" class="form-label">End Time</label>
+                                <input style="background-color: none;" type="time" class="form-control fc" id="end_time" name="end_time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="recess_start_time" class="form-label">Recess Start Time</label>
+                                <input style="background-color: none;" type="time" class="form-control fc" id="recess_start_time" name="recess_start_time" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="recess_end_time" class="form-label">Recess End Time</label>
+                                <input style="background-color: none;" type="time" class="form-control fc" id="recess_end_time" name="recess_end_time" required>
+                            </div>
+
+                            <!-- <div class="mb-3">
                                 <label for="end_time" class="form-label">Ending Time</label>
                                 <input type="text" class="form-control fc" id="end_time" placeholder="Ending Time"
                                     name="end_time" required>
-                            </div>
+                            </div> -->
                             <div class="mb-3">
                                 <label for="totalslots" class="form-label">Available Slots Per Day</label>
                                 <input type="number" class="form-control fc" id="totalslots"
@@ -625,12 +644,50 @@ async function handleSignup() {
     const country = document.getElementById('country').value.trim();
     const pin_code = document.getElementById('pincode').value.trim();
     const mno = document.getElementById('mno').value.trim();
-    const total_work_hours = document.getElementById('total_workhours').value.trim();
+    // const total_work_hours = document.getElementById('total_workhours').value.trim();
     const start_time = document.getElementById('start_time').value.trim();
     const end_time = document.getElementById('end_time').value.trim();
+    const recess_start_time = document.getElementById('recess_start_time').value.trim();
+    const recess_end_time = document.getElementById('recess_end_time').value.trim();
     const total_slots = document.getElementById('totalslots').value.trim();
     const website = document.getElementById('website').value.trim();
     const service = document.getElementById('service').value.trim();
+
+    if (!recess_start_time || !recess_end_time) {
+        alert("Please enter both Recess Start and End Time.");
+        return;
+    }
+
+    const start = new Date(`1970-01-01T${start_time}:00`);
+    const end = new Date(`1970-01-01T${end_time}:00`);
+    const r_start = new Date(`1970-01-01T${recess_end_time}:00`);
+    const r_end = new Date(`1970-01-01T${recess_end_time}:00`);
+
+    console.log("Start Time:", start);
+    console.log("End Time:", end);
+    console.log("Recess Start Time:", r_start);
+    console.log("Recess End Time:", r_end);
+
+   
+    if (end <= start) {
+        alert("End Time must be later than Start Time.");
+        return;
+    }
+
+    if(r_start < start){
+        alert("Recess start time must be after the Start Time.");
+        return;
+    }
+
+    if(r_end > end){
+        alert("Recess end time must be before the end Time.");
+        return;
+    }
+
+    // if(true){
+    //     alert("done")
+    //     return;
+    // }
 
     // Prepare data object as per schema
     const signupData = {
@@ -645,9 +702,11 @@ async function handleSignup() {
         country: country,
         pin_code: pin_code,
         mno: mno,
-        total_work_hours: total_work_hours,
+        // total_work_hours: total_work_hours,
         start_time: start_time,
         end_time: end_time,
+        recess_start_time: recess_start_time,
+        recess_end_time: recess_end_time,
         total_slots: total_slots,
         website: website || "",   // Optional field
         service: service,

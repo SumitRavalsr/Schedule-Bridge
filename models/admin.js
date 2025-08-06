@@ -14,10 +14,12 @@ const AdminSchema = new mongoose.Schema({
     country: { type: String, required: true },
     pin_code: { type: String, required: true },
     mno: { type: String, required: true, unique: true },
-    total_work_hours: { type: Number, required: true },
+    // total_work_hours: { type: Number, required: true },
     start_time: { type: String, required: true },
     end_time: { type: String, required: true },
     total_slots: { type: Number, required: true },
+    recess_start_time: { type: String, required: true },
+    recess_end_time: { type: String, required: true },
     website: { type: String },
     service: { type: String, required: true },
     role: {
