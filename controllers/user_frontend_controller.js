@@ -56,7 +56,7 @@ const setPassword = async (req,res)=>{
     try {
 
         const userId=req.userInfo.userId
-        console.log('user id is: ',userId);
+        // console.log('user id is: ',userId);
         
         // let user = await User.findById(userId);
         // if(!user){
@@ -209,9 +209,9 @@ const contactHandle = async (req, res)=>{
 }
 
 const changeUserProfile = async (req, res)=>{
-    console.log(req.body)
+    // console.log(req.body)
     const userId = req.userInfo.userId
-    console.log(userId);
+    // console.log(userId);
     
     try{
         const { email, name } = req.body
@@ -357,7 +357,7 @@ const getUserDetailsForProfile = async (req, res) => {
         const userId = req.userInfo.userId;
 
         const user = await User.findById(userId, 'user_name -_id').lean();
-        console.log('dd',user.user_name);
+        // console.log('dd',user.user_name);
         
         if (!user) {
             return res.status(404).json({
